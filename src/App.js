@@ -15,20 +15,7 @@ class App extends React.Component {
   }
 
   onRouteChange = (route) => {
-    // No code splitting
     this.setState({ route: route });
-    // With code splitting
-    //   if (route === "page1") {
-    //     this.setState({ route: route });
-    //   } else if (route === "page2") {
-    //     import("./components/page2.component").then((Page2) => {
-    //       this.setState({ route: route, component: Page2.default });
-    //     });
-    //   } else if (route === "page3") {
-    //     import("./components/page3.component").then((Page3) => {
-    //       this.setState({ route: route, component: Page3.default });
-    //     });
-    //   }
   };
 
   render() {
@@ -45,11 +32,6 @@ class App extends React.Component {
       );
       return <AsyncPage3 onRouteChange={this.onRouteChange} />;
     }
-    // if (this.state.route === "page1") {
-    //   return <Page1 onRouteChange={this.onRouteChange} />;
-    // } else {
-    //   return <this.state.component onRouteChange={this.onRouteChange} />;
-    // }
   }
 }
 
