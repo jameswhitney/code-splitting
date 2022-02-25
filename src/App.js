@@ -1,16 +1,15 @@
 import "./App.css";
-import React from "react";
+import React, { Suspense } from "react";
 import Page1 from "./components/page1.component";
-// import Page2 from "./components/page2.component";
-// import Page3 from "./components/page3.component";
-import asyncComponent from "./components/async.component";
+
+const Page2Lazy = React.lazy(() => import("./components/page2.component"));
+const Page3Lazy = React.lazy(() => import("./components/page3.component"));
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       route: "page1",
-      component: null,
     };
   }
 
@@ -22,15 +21,17 @@ class App extends React.Component {
     if (this.state.route === "page1") {
       return <Page1 onRouteChange={this.onRouteChange} />;
     } else if (this.state.route === "page2") {
-      const AsyncPage2 = asyncComponent(() =>
-        import("./components/page2.component")
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Page2Lazy onRouteChange={this.onRouteChange} />
+        </Suspense>
       );
-      return <AsyncPage2 onRouteChange={this.onRouteChange} />;
-    } else if (this.state.route === "page3") {
-      const AsyncPage3 = asyncComponent(() =>
-        import("./components/page3.component")
+    } else {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Page3Lazy onRouteChange={this.onRouteChange} />
+        </Suspense>
       );
-      return <AsyncPage3 onRouteChange={this.onRouteChange} />;
     }
   }
 }
